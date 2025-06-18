@@ -7,9 +7,9 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using agenda_contactos;
 
 namespace agenda_contactos
 {
@@ -21,25 +21,24 @@ namespace agenda_contactos
 		public Button botonAñadir;
 		public Button botonEliminar;
 		public Button botonModificar;
-		public DataGridView cuadriculaContactos;
+		public CuadriculaContactos cuadriculaContactos;
 		
 		public MainForm()
 		{
 			InitializeComponent();
 			crearLayout();
+			AutoSize = true;
 		}
 		
 		private void crearLayout()
 		{
-			FlowLayoutPanel panelBotones = new FlowLayoutPanel { AutoSize = true };
 			FlowLayoutPanel panelPrincipal = new FlowLayoutPanel { 
 				AutoSize = true, FlowDirection = FlowDirection.TopDown 
 			};
-			botonAñadir = crearBoton("Añadir", panelBotones);
-			botonEliminar = crearBoton("Eliminar", panelBotones);
-			botonModificar = crearBoton("Modificar", panelBotones);
-			panelPrincipal.Controls.Add(panelBotones);
+			cuadriculaContactos = new CuadriculaContactos(panelPrincipal);
+			FlowLayoutPanel panelBotones = crearPanelBotones(panelPrincipal);
 			panelPrincipal.Controls.Add(cuadriculaContactos);
+			panelPrincipal.Controls.Add(panelBotones);
 			Controls.Add(panelPrincipal);
 		}
 		
@@ -47,10 +46,26 @@ namespace agenda_contactos
 		{
 			Button result = new Button { 
 				AutoSize = true,
-				Text = texto,		
+				Text = texto,
+				Margin = new Padding(30, 20, 30, 20),
+				Padding = new Padding(10, 5, 10, 5)
 			};
 			padre.Controls.Add(result);
 			return result;
 		}
+		
+		private FlowLayoutPanel crearPanelBotones(Panel padre)
+		{
+			FlowLayoutPanel panelBotones = new FlowLayoutPanel { 
+				AutoSize = true,
+				Font = new Font("Microsoft Sans Serif", 9.5f)
+			};
+			botonAñadir = crearBoton("Añadir", panelBotones);
+			botonEliminar = crearBoton("Eliminar", panelBotones);
+			botonModificar = crearBoton("Modificar", panelBotones);
+			return panelBotones;
+		}
+		
+		
 	}
 }

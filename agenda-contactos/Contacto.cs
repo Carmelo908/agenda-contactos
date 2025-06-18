@@ -9,7 +9,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace agenda_contactos.Clases
+namespace agenda_contactos
 {
 	/// <summary>
 	/// Description of Contacto.

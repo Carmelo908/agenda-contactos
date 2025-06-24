@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Contacto.cs" />
     <Compile Include="CuadriculaContactos.cs" />
+    <Compile Include="FormularioContactos.cs" />
     <Compile Include="MainForm.cs" />
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>

@@ -2,7 +2,7 @@ C:\Users\User\Documents\SharpDevelop Projects\agenda-contactos\agenda-contactos\
 C:\Users\User\Documents\SharpDevelop Projects\agenda-contactos\agenda-contactos\bin\Debug\agenda-contactos.exe.config
 C:\Users\User\Documents\SharpDevelop Projects\agenda-contactos\agenda-contactos\bin\Debug\agenda-contactos.exe
 C:\Users\User\Documents\SharpDevelop Projects\agenda-contactos\agenda-contactos\bin\Debug\agenda-contactos.pdb
-C:\Users\User\Documents\SharpDevelop Projects\agenda-contactos\agenda-contactos\obj\Debug\agenda-contactos.exe
-C:\Users\User\Documents\SharpDevelop Projects\agenda-contactos\agenda-contactos\obj\Debug\agenda-contactos.pdb
 C:\Users\User\Documents\SharpDevelop Projects\agenda-contactos\agenda-contactos\bin\Debug\Newtonsoft.Json.dll
 C:\Users\User\Documents\SharpDevelop Projects\agenda-contactos\agenda-contactos\bin\Debug\Newtonsoft.Json.xml
+C:\Users\User\Documents\SharpDevelop Projects\agenda-contactos\agenda-contactos\obj\Debug\agenda-contactos.exe
+C:\Users\User\Documents\SharpDevelop Projects\agenda-contactos\agenda-contactos\obj\Debug\agenda-contactos.pdb

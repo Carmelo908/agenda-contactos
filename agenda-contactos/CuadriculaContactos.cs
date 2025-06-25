@@ -20,7 +20,7 @@ namespace agenda_contactos
 	public class CuadriculaContactos : DataGridView
 	{
 		private readonly string[] NombresColumnas = 
-		{ "Nombre", "Email", "Teléfono", "Movil", "Domicilio", "Notas" };
+		{ "Nombre", "Email", "Teléfono", "Domicilio", "Notas" };
 
 		public CuadriculaContactos(Panel padre)
 		{
@@ -43,7 +43,7 @@ namespace agenda_contactos
 		
 		public void CrearColumnas()
 		{
-			ColumnCount = 6;
+			ColumnCount = 5;
 			ColumnHeadersDefaultCellStyle.BackColor = Color.Navy;
         	ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
        		ColumnHeadersDefaultCellStyle.Font = new Font(Font, FontStyle.Bold);

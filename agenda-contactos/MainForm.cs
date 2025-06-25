@@ -28,6 +28,9 @@ namespace agenda_contactos
 			InitializeComponent();
 			crearLayout();
 			AutoSize = true;
+			botonAñadir.Click += añadirContacto;
+			botonEliminar.Enabled = false;
+			botonModificar.Enabled = false;
 		}
 		
 		private void crearLayout()
@@ -66,6 +69,9 @@ namespace agenda_contactos
 			return panelBotones;
 		}
 		
-		
+		private void añadirContacto(object sender, EventArgs e)
+		{
+			new FormularioContactos();
+		}
 	}
 }

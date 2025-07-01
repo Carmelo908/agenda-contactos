@@ -9,7 +9,8 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Collections;
+using System.ComponentModel;
+using System.Collections.Generic;
 
 namespace agenda_contactos
 {
@@ -18,15 +19,14 @@ namespace agenda_contactos
 	/// </summary>
 	
 	public class CuadriculaContactos : DataGridView
-	{
+	{	
 		private readonly string[] NombresColumnas = 
 		{ "Nombre", "Email", "Teléfono", "Domicilio", "Notas" };
 
-		public CuadriculaContactos(Panel padre)
+		public CuadriculaContactos(Panel padre, ref List<Contacto> contactos)
 		{
-			CrearColumnas();
-
-        	Name = "Cuadrícula de Contactos";
+			crearColumnas();
+			Name = "Cuadrícula de Contactos";
        		Size = new Size(600, 300);
         	AutoSizeRowsMode =
         	DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders;
@@ -36,23 +36,15 @@ namespace agenda_contactos
         	GridColor = Color.Black;
         	RowHeadersVisible = false;
         	
+        	DataSource = contactos;
         	padre.Controls.Add(this);
 		}
 		
-		
-		
-		public void CrearColumnas()
+		public void crearColumnas()
 		{
-			ColumnCount = 5;
 			ColumnHeadersDefaultCellStyle.BackColor = Color.Navy;
         	ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
        		ColumnHeadersDefaultCellStyle.Font = new Font(Font, FontStyle.Bold);
-			for (int i = 0; i < ColumnCount; i++) 
-			{
-				Columns[i].Name = NombresColumnas[i];
-			}
 		}
-		
-		
 	}
 }

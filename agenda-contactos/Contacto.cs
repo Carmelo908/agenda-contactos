@@ -19,7 +19,19 @@ namespace agenda_contactos
 	
 	public class ContactoInvalido : Exception
 	{
-		private List<string> errores;
+		private List<string> Errores;
+		
+		public ContactoInvalido(List<string> errores)
+			: base("El contacto tiene campos inválidos: " + 
+			       "\n- " + string.Join("\n- ", errores))
+		{
+			Errores = errores;
+		}
+		
+		public override string ToString()
+		{
+			return base.Message;
+		}
 	}
 	
 	[DataContract]
@@ -31,15 +43,16 @@ namespace agenda_contactos
 		private string domicilio = "";
 		private string notas = "";
 		
+		private static readonly string errorEmail = "Lo introducido en el campo " + 
+			"email no corresponde a un correo electrónico válido";
+		
+		private static readonly string errorTelefono = "El número de teléfono " +
+			"contiene caracteres que no son números";
+		
 		[DataMember]
 		public string Nombre {
 			get { return nombre; }
-			set {
-				//if (Regex.IsMatch(value, "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) 
-				//{
-					nombre = value;
-				//}
-			}
+			set { nombre = value; }
 		}
 		
 		[DataMember]
@@ -54,7 +67,6 @@ namespace agenda_contactos
 			set { telefono = value; }
 		}
 
-
 		[DataMember]
 		public string Domicilio {
 			get { return domicilio; }
@@ -67,14 +79,58 @@ namespace agenda_contactos
 			set { notas = value; }
 		}
 		
+		public bool controlarEmail(string email)
+		{
+			if (email.Length == 0) {
+				return true;
+			} else {
+				return Regex.IsMatch(email, "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
+			}
+		}
+		
+		public bool controlarTelefono(string telefono)
+		{
+			foreach (var caracter in telefono) {
+				if (caracter < '0' && caracter > '9') {
+					return false;
+				}		
+			}
+			return true;
+		}
+		
+		public List<string> controlarCampos(string nombre, string email, 
+		                                    string telefono, string domicilio)
+		{
+			var errores = new List<string>();
+			if (controlarEmail(email)) {
+				Email = email;
+			} else {
+				errores.Add(errorEmail);
+			}
+			if (controlarTelefono(telefono)) {
+				Telefono = telefono;
+			} else {
+				errores.Add(errorTelefono);
+			}
+			if (nombre.Length == 0) {
+				errores.Add("El campo nombre es obligatorio");
+			}
+			this.domicilio = domicilio;
+			return errores;
+		}
+		
 		public Contacto(string nombre, string email, string telefono, 
 		                string domicilio, string notas)
 		{
+			var errores = controlarCampos(nombre, email, telefono, domicilio);
 			Nombre = nombre;
-			Email = email;
-			Telefono = telefono;
+			
 			Domicilio = domicilio;
 			Notas = notas;
+			if (errores.Count != 0) 
+			{
+				throw new ContactoInvalido(errores);
+			}
 		}
 	}
 }

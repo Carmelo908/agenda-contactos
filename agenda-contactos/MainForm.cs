@@ -10,6 +10,8 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using agenda_contactos;
+using System.Collections.Generic;
+using System.Threading;
 
 namespace agenda_contactos
 {
@@ -23,14 +25,18 @@ namespace agenda_contactos
 		public Button botonModificar;
 		public CuadriculaContactos cuadriculaContactos;
 		
+		public List<Contacto> listaContactos;
+		
 		public MainForm()
 		{
+			listaContactos = SerializadorJSON.abrirArchivo();
 			InitializeComponent();
 			crearLayout();
 			AutoSize = true;
 			botonAñadir.Click += añadirContacto;
-			botonEliminar.Enabled = false;
+			botonEliminar.Click += eliminarContacto;
 			botonModificar.Enabled = false;
+			FormClosed += cerrar;
 		}
 		
 		private void crearLayout()
@@ -38,7 +44,7 @@ namespace agenda_contactos
 			FlowLayoutPanel panelPrincipal = new FlowLayoutPanel { 
 				AutoSize = true, FlowDirection = FlowDirection.TopDown 
 			};
-			cuadriculaContactos = new CuadriculaContactos(panelPrincipal);
+			cuadriculaContactos = new CuadriculaContactos(panelPrincipal, ref listaContactos);
 			FlowLayoutPanel panelBotones = crearPanelBotones(panelPrincipal);
 			panelPrincipal.Controls.Add(cuadriculaContactos);
 			panelPrincipal.Controls.Add(panelBotones);
@@ -69,9 +75,23 @@ namespace agenda_contactos
 			return panelBotones;
 		}
 		
+		private void cerrar(object sender, EventArgs e)
+		{
+			SerializadorJSON.guardarContactos(listaContactos);
+		}
+		
+		private void eliminarContacto(object sender, EventArgs e)
+		{
+			int cantidadFilasSeleccionadas = cuadriculaContactos.Rows
+				.GetRowCount(DataGridViewElementStates.Selected);
+			if (cantidadFilasSeleccionadas == 0) {
+				return;
+			}			
+		}
+		
 		private void añadirContacto(object sender, EventArgs e)
 		{
-			new FormularioContactos();
+			var formularioContactos = new FormularioContactos(listaContactos);
 		}
 	}
 }

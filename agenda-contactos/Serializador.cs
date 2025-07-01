@@ -13,17 +13,23 @@ namespace agenda_contactos
 	{
 		private static readonly string rutaArchivo = "./contactos.json";
 		
-		static List<Contacto> abrirArchivo()
+		static public List<Contacto> abrirArchivo()
 		{
-			string json = File.ReadAllText(rutaArchivo);
-			return JsonConvert.DeserializeObject<List<Contacto>>(json);
+			try {
+				string json = File.ReadAllText(rutaArchivo);
+				return JsonConvert.DeserializeObject<List<Contacto>>(json);
+			} catch (FileNotFoundException) {
+				return new List<Contacto>();
+			} catch (ContactoInvalido) {
+				return new List<Contacto>();
+			}
 		}
+			
 		
-		static void guardarEnArchivo(Contacto contacto)
+		static public void guardarContactos(List<Contacto> Contactos)
 		{
-			var contactos = abrirArchivo();
-			contactos.Add(contacto);
-			string json = JsonConvert.SerializeObject(rutaArchivo);
+			string json = JsonConvert.SerializeObject(Contactos);
+			File.WriteAllText(rutaArchivo, json);
 		}
 	}
 }

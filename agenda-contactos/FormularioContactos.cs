@@ -9,6 +9,8 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace agenda_contactos
 {
@@ -23,22 +25,24 @@ namespace agenda_contactos
 		public TextBox campoTelefono;
 		public TextBox campoDomicilio;
 		public TextBox campoNotas;
+		
+		private List<Contacto> listaContactos;
 			
-		public FormularioContactos()
+		public FormularioContactos(List<Contacto> listaContactos)
 		{
 			AutoSize = true;
 			botonListo = new Button {
 				Text = "Listo",
 				Margin = new Padding(140, 10, 140, 10),
-				//Dock = DockStyle.Fill,
 				Height = 30
 			};
 			Controls.Add(crearLayout());
 			botonListo.Click += añadirContacto;
+			this.listaContactos = listaContactos;
 			Show();
 		}
 		
-		FlowLayoutPanel crearCelda(TextBox input, string textoLabel)
+		FlowLayoutPanel crearCelda(ref TextBox input, string textoLabel)
 		{
 			var celda = new FlowLayoutPanel { 
 				FlowDirection = FlowDirection.TopDown,
@@ -59,14 +63,14 @@ namespace agenda_contactos
 				RowCount = 3,
 				AutoSize = true
 			};
-			panelTabla.Controls.Add(crearCelda(campoNombre, "Nombre:"), 0, 0);
-			panelTabla.Controls.Add(crearCelda(campoEmail, "Correo electrónico:"), 1, 0);
-			panelTabla.Controls.Add(crearCelda(campoTelefono, "Número de teléfono:"), 0, 1);
-			panelTabla.Controls.Add(crearCelda(campoDomicilio, "Domicilio:"), 1, 1);
-			panelTabla.Controls.Add(crearCelda(campoNotas, "Notas:"), 0, 2);
+			panelTabla.Controls.Add(crearCelda(ref campoNombre, "Nombre:"), 0, 0);
+			panelTabla.Controls.Add(crearCelda(ref campoEmail, "Correo electrónico:"), 1, 0);
+			panelTabla.Controls.Add(crearCelda(ref campoTelefono, "Número de teléfono:"), 0, 1);
+			panelTabla.Controls.Add(crearCelda(ref campoDomicilio, "Domicilio:"), 1, 1);
+			panelTabla.Controls.Add(crearCelda(ref campoNotas, "Notas:"), 0, 2);
 			return panelTabla;
 		}
-		
+
 		FlowLayoutPanel crearLayout()
 		{
 			var panelPrincipal = new FlowLayoutPanel { 
@@ -77,10 +81,18 @@ namespace agenda_contactos
 			panelPrincipal.Controls.Add(botonListo);
 			return panelPrincipal;
 		}
-		
+
 		private void añadirContacto(object sender, EventArgs e)
 		{
-			Close();
+			Contacto contactoGuardado;
+			try {
+				contactoGuardado = new Contacto(campoNombre.Text, campoEmail.Text,
+			            campoTelefono.Text, campoDomicilio.Text, campoNotas.Text);
+				listaContactos.Add(contactoGuardado);
+				Close();
+			} catch (ContactoInvalido error) {
+				MessageBox.Show(error.Message);
+			}
 		}
 	}
 }

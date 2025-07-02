@@ -20,12 +20,10 @@ namespace agenda_contactos
 	
 	public class CuadriculaContactos : DataGridView
 	{	
-		private readonly string[] NombresColumnas = 
-		{ "Nombre", "Email", "Teléfono", "Domicilio", "Notas" };
 
 		public CuadriculaContactos(Panel padre, ref List<Contacto> contactos)
 		{
-			crearColumnas();
+			crearColumnas(); 
 			Name = "Cuadrícula de Contactos";
        		Size = new Size(600, 300);
         	AutoSizeRowsMode =

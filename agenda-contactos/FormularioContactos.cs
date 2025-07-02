@@ -42,6 +42,21 @@ namespace agenda_contactos
 			Show();
 		}
 		
+		public FormularioContactos(List<Contacto> listaContactos, int indice)
+			: this(listaContactos)
+		{
+			rellenarCampos(listaContactos[indice]);
+		}
+		
+		void rellenarCampos(Contacto contacto)
+		{
+			campoNombre.Text = contacto.Nombre;
+			campoEmail.Text = contacto.Email;
+			campoTelefono.Text = contacto.Telefono;
+			campoDomicilio.Text = contacto.Domicilio;
+			campoNotas.Text = contacto.Notas;
+		}
+		
 		FlowLayoutPanel crearCelda(ref TextBox input, string textoLabel)
 		{
 			var celda = new FlowLayoutPanel { 

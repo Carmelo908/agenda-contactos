@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using agenda_contactos;
 using System.Collections.Generic;
 using System.Threading;
+using System.Text;
 
 namespace agenda_contactos
 {
@@ -31,11 +32,12 @@ namespace agenda_contactos
 		{
 			listaContactos = SerializadorJSON.abrirArchivo();
 			InitializeComponent();
+			FormBorderStyle = FormBorderStyle.FixedDialog;
 			crearLayout();
 			AutoSize = true;
 			botonAñadir.Click += añadirContacto;
 			botonEliminar.Click += eliminarContacto;
-			botonModificar.Enabled = false;
+			botonModificar.Click += modificarContacto;
 			FormClosed += cerrar;
 		}
 		
@@ -77,21 +79,30 @@ namespace agenda_contactos
 		
 		private void cerrar(object sender, EventArgs e)
 		{
-			SerializadorJSON.guardarContactos(listaContactos);
-		}
-		
-		private void eliminarContacto(object sender, EventArgs e)
-		{
-			int cantidadFilasSeleccionadas = cuadriculaContactos.Rows
-				.GetRowCount(DataGridViewElementStates.Selected);
-			if (cantidadFilasSeleccionadas == 0) {
-				return;
-			}			
+			SerializadorJSON.guardarContactos(ref listaContactos);
 		}
 		
 		private void añadirContacto(object sender, EventArgs e)
 		{
 			var formularioContactos = new FormularioContactos(listaContactos);
+		}
+		
+		private void eliminarContacto(object sender, EventArgs e)
+		{
+			int indiceFila = cuadriculaContactos.CurrentCell.RowIndex;
+			listaContactos.RemoveAt(indiceFila);
+			cuadriculaContactos.DataSource = null;
+			cuadriculaContactos.DataSource = listaContactos;
+			cuadriculaContactos.Update();
+		}
+		
+		private void modificarContacto(object sender, EventArgs e)
+		{
+			int indiceFila = cuadriculaContactos.CurrentCell.RowIndex;
+			new FormularioContactos(listaContactos, indiceFila);
+			listaContactos.RemoveAt(indiceFila);
+			cuadriculaContactos.DataSource = null;
+			cuadriculaContactos.DataSource = listaContactos;
 		}
 	}
 }

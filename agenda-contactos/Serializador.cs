@@ -26,7 +26,7 @@ namespace agenda_contactos
 		}
 			
 		
-		static public void guardarContactos(List<Contacto> Contactos)
+		static public void guardarContactos(ref List<Contacto> Contactos)
 		{
 			string json = JsonConvert.SerializeObject(Contactos);
 			File.WriteAllText(rutaArchivo, json);

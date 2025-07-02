@@ -79,7 +79,7 @@ namespace agenda_contactos
 			set { notas = value; }
 		}
 		
-		public bool controlarEmail(string email)
+		private bool controlarEmail(string email)
 		{
 			if (email.Length == 0) {
 				return true;
@@ -88,7 +88,7 @@ namespace agenda_contactos
 			}
 		}
 		
-		public bool controlarTelefono(string telefono)
+		private bool controlarTelefono(string telefono)
 		{
 			foreach (var caracter in telefono) {
 				if (caracter < '0' && caracter > '9') {
@@ -98,7 +98,7 @@ namespace agenda_contactos
 			return true;
 		}
 		
-		public List<string> controlarCampos(string nombre, string email, 
+		private List<string> controlarCampos(string nombre, string email, 
 		                                    string telefono, string domicilio)
 		{
 			var errores = new List<string>();

@@ -13,6 +13,7 @@ using agenda_contactos;
 using System.Collections.Generic;
 using System.Threading;
 using System.Text;
+using agenda_contactos;
 
 namespace agenda_contactos
 {
@@ -24,6 +25,7 @@ namespace agenda_contactos
 		public Button botonAñadir;
 		public Button botonEliminar;
 		public Button botonModificar;
+		public Button botonExportar;
 		public CuadriculaContactos cuadriculaContactos;
 		
 		public List<Contacto> listaContactos;
@@ -38,6 +40,7 @@ namespace agenda_contactos
 			botonAñadir.Click += añadirContacto;
 			botonEliminar.Click += eliminarContacto;
 			botonModificar.Click += modificarContacto;
+			botonExportar.Click += exportar;
 			FormClosed += cerrar;
 		}
 		
@@ -58,7 +61,7 @@ namespace agenda_contactos
 			Button result = new Button { 
 				AutoSize = true,
 				Text = texto,
-				Margin = new Padding(30, 20, 30, 20),
+				Margin = new Padding(20, 20, 20, 20),
 				Padding = new Padding(10, 5, 10, 5)
 			};
 			padre.Controls.Add(result);
@@ -74,6 +77,7 @@ namespace agenda_contactos
 			botonAñadir = crearBoton("Añadir", panelBotones);
 			botonEliminar = crearBoton("Eliminar", panelBotones);
 			botonModificar = crearBoton("Modificar", panelBotones);
+			botonExportar = crearBoton("Exportar a PDF", panelBotones);
 			return panelBotones;
 		}
 		
@@ -84,7 +88,8 @@ namespace agenda_contactos
 		
 		private void añadirContacto(object sender, EventArgs e)
 		{
-			var formularioContactos = new FormularioContactos(listaContactos);
+			var formularioContactos = 
+				new FormularioContactos(listaContactos, cuadriculaContactos);
 		}
 		
 		private void eliminarContacto(object sender, EventArgs e)
@@ -99,10 +104,21 @@ namespace agenda_contactos
 		private void modificarContacto(object sender, EventArgs e)
 		{
 			int indiceFila = cuadriculaContactos.CurrentCell.RowIndex;
-			new FormularioContactos(listaContactos, indiceFila);
+			new FormularioContactos(listaContactos, cuadriculaContactos, indiceFila);
 			listaContactos.RemoveAt(indiceFila);
 			cuadriculaContactos.DataSource = null;
 			cuadriculaContactos.DataSource = listaContactos;
+		}
+		
+		private void exportar(object sender, EventArgs e)
+		{
+			try {
+				ExportadorPDF.exportarAPDF("./Contactos.pdf", listaContactos);
+				MessageBox.Show("La exportación se realizó con éxito");
+			} catch (Exception excep)
+			{
+				MessageBox.Show(excep.ToString(), "Error al exportar");
+			}
 		}
 	}
 }

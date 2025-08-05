@@ -31,6 +31,15 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto">
+      <HintPath>..\..\..\..\..\Downloads\BouncyCastle.Crypto_x86\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp">
+      <HintPath>..\..\..\..\..\Downloads\itextsharp_x86\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp.5.5.13.4">
+      <HintPath>..\..\..\..\..\Downloads\itextsharp.5.5.13.4.nupkg</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
@@ -59,6 +68,7 @@
   <ItemGroup>
     <Compile Include="Contacto.cs" />
     <Compile Include="CuadriculaContactos.cs" />
+    <Compile Include="ExportadorPDF.cs" />
     <Compile Include="FormularioContactos.cs" />
     <Compile Include="MainForm.cs" />
     <Compile Include="MainForm.Designer.cs">

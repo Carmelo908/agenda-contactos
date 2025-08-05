@@ -43,6 +43,8 @@ namespace agenda_contactos
 		private string domicilio = "";
 		private string notas = "";
 		
+		public static readonly int cantidadCampos = 5;
+		
 		private static readonly string errorEmail = "Lo introducido en el campo " + 
 			"email no corresponde a un correo electrónico válido";
 		

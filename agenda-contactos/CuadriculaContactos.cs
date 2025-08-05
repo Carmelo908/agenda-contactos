@@ -25,7 +25,7 @@ namespace agenda_contactos
 		{
 			crearColumnas(); 
 			Name = "Cuadrícula de Contactos";
-       		Size = new Size(600, 300);
+       		Size = new Size(500, 300);
         	AutoSizeRowsMode =
         	DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders;
         	ColumnHeadersBorderStyle =

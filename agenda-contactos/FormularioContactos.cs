@@ -26,9 +26,12 @@ namespace agenda_contactos
 		public TextBox campoDomicilio;
 		public TextBox campoNotas;
 		
+		public CuadriculaContactos cuadriculaContactos;
+		
 		private List<Contacto> listaContactos;
 			
-		public FormularioContactos(List<Contacto> listaContactos)
+		public FormularioContactos(List<Contacto> listaContactos, 
+		                           CuadriculaContactos cuadriculaContactos)
 		{
 			AutoSize = true;
 			botonListo = new Button {
@@ -38,12 +41,14 @@ namespace agenda_contactos
 			};
 			Controls.Add(crearLayout());
 			botonListo.Click += añadirContacto;
+			this.cuadriculaContactos = cuadriculaContactos;
 			this.listaContactos = listaContactos;
 			Show();
 		}
 		
-		public FormularioContactos(List<Contacto> listaContactos, int indice)
-			: this(listaContactos)
+		public FormularioContactos(List<Contacto> listaContactos, 
+		                           CuadriculaContactos cuadriculaContactos, int indice)
+			: this(listaContactos, cuadriculaContactos)
 		{
 			rellenarCampos(listaContactos[indice]);
 		}
@@ -104,6 +109,8 @@ namespace agenda_contactos
 				contactoGuardado = new Contacto(campoNombre.Text, campoEmail.Text,
 			            campoTelefono.Text, campoDomicilio.Text, campoNotas.Text);
 				listaContactos.Add(contactoGuardado);
+				cuadriculaContactos.DataSource = null;
+				cuadriculaContactos.DataSource = listaContactos;
 				Close();
 			} catch (ContactoInvalido error) {
 				MessageBox.Show(error.Message);
